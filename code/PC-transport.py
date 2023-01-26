@@ -39,6 +39,9 @@ total_script_tic = time.perf_counter()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 data_tag = 'CO-H2-10-1-isobaric-adiabatic-closed-HR'
+data_path = '../data/'
+results_path = '../results/'
+species_to_remove_list = ['N2', 'AR', 'HE']
 sample_percentage = 100
 random_seed = 100
 n_components = 2
@@ -55,10 +58,6 @@ max_simulation_time = 0.005
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Load training data
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-species_to_remove_list = ['N2', 'AR', 'HE']
-
-data_path = '../data/'
 
 state_space_names = pd.read_csv(data_path + data_tag + '-state-space-names.csv', sep = ',', header=None).to_numpy().ravel()
 state_space = pd.read_csv(data_path + data_tag + '-state-space.csv', sep = ',', header=None).to_numpy()
@@ -172,7 +171,7 @@ if run_RBF:
     PCA_source_terms_predicted_rbf = rbf_model(PCA_state_space_test_trajectory_CS)
     PCA_source_terms_predicted_rbf = preprocess.invert_center_scale(PCA_source_terms_predicted_rbf, centers_PCA_source_terms, scales_PCA_source_terms)
 
-    np.savetxt('../results/PCA-' + scaling + '-RBF-predicted-source-terms.csv', (PCA_source_terms_predicted_rbf), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-RBF-predicted-source-terms.csv', (PCA_source_terms_predicted_rbf), delimiter=',', fmt='%.16e')
 
 # GPR - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -199,7 +198,7 @@ if run_GPR:
     PCA_source_terms_predicted_gpr[:,1], _ = gpr_model.predict(PCA_source_terms_support_trajectories_CS[idx_train_gpr,1], PCA_state_space_test_trajectory_CS, return_var=False)
     PCA_source_terms_predicted_gpr = preprocess.invert_center_scale(PCA_source_terms_predicted_gpr, centers_PCA_source_terms, scales_PCA_source_terms)
 
-    np.savetxt('../results/PCA-' + scaling + '-GPR-predicted-source-terms.csv', (PCA_source_terms_predicted_gpr), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-GPR-predicted-source-terms.csv', (PCA_source_terms_predicted_gpr), delimiter=',', fmt='%.16e')
 
 # ANN - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -247,7 +246,7 @@ if run_ANN:
     PCA_source_terms_predicted_ann = ann_model.predict(PCA_state_space_test_trajectory_CS)
     PCA_source_terms_predicted_ann = preprocess.invert_center_scale(PCA_source_terms_predicted_ann, centers_PCA_source_terms, scales_PCA_source_terms)
 
-    np.savetxt('../results/PCA-' + scaling + '-ANN-predicted-source-terms.csv', (PCA_source_terms_predicted_ann), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-ANN-predicted-source-terms.csv', (PCA_source_terms_predicted_ann), delimiter=',', fmt='%.16e')
 
 # Kernel regression - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -266,7 +265,7 @@ if run_KReg:
     PCA_source_terms_predicted_kreg = kreg_model.predict(PCA_state_space_test_trajectory_CS, bandwidth=0.0001)
     PCA_source_terms_predicted_kreg = preprocess.invert_center_scale(PCA_source_terms_predicted_kreg, centers_PCA_source_terms, scales_PCA_source_terms)
 
-    np.savetxt('../results/PCA-' + scaling + '-KReg-predicted-source-terms.csv', (PCA_source_terms_predicted_kreg), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-KReg-predicted-source-terms.csv', (PCA_source_terms_predicted_kreg), delimiter=',', fmt='%.16e')
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Evolve the reduced-order model
@@ -311,11 +310,11 @@ if run_RBF:
     toc = time.perf_counter()
     print(f'\tTime it took: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    np.savetxt('../results/PCA-' + scaling + '-RBF-numerical-solution.csv', (numerical_solution_rbf_model), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-RBF-numerical-solution.csv', (numerical_solution_rbf_model), delimiter=',', fmt='%.16e')
 
     PC_source_terms_from_numerical_solution = PCA_source_terms_rbf_model(numerical_solution_rbf_model)
 
-    np.savetxt('../results/PCA-' + scaling + '-RBF-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-RBF-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
 
 # GPR - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -354,11 +353,11 @@ if run_GPR:
     toc = time.perf_counter()
     print(f'\tTime it took: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    np.savetxt('../results/PCA-' + scaling + '-GPR-numerical-solution.csv', (numerical_solution_gpr_model), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-GPR-numerical-solution.csv', (numerical_solution_gpr_model), delimiter=',', fmt='%.16e')
 
     PC_source_terms_from_numerical_solution = PCA_source_terms_gpr_model(numerical_solution_gpr_model)
 
-    np.savetxt('../results/PCA-' + scaling + '-GPR-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-GPR-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
 
 # ANN - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -396,11 +395,11 @@ if run_ANN:
     toc = time.perf_counter()
     print(f'\tTime it took: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    np.savetxt('../results/PCA-' + scaling + '-ANN-numerical-solution.csv', (numerical_solution_ann_model), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-ANN-numerical-solution.csv', (numerical_solution_ann_model), delimiter=',', fmt='%.16e')
 
     PC_source_terms_from_numerical_solution = PCA_source_terms_ann_model(numerical_solution_ann_model)
 
-    np.savetxt('../results/PCA-' + scaling + '-ANN-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-ANN-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
 
 # Kernel regression - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -438,11 +437,11 @@ if run_KReg:
     toc = time.perf_counter()
     print(f'\tTime it took: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    np.savetxt('../results/PCA-' + scaling + '-KReg-numerical-solution.csv', (numerical_solution_kreg_model), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-KReg-numerical-solution.csv', (numerical_solution_kreg_model), delimiter=',', fmt='%.16e')
 
     PC_source_terms_from_numerical_solution = PCA_source_terms_kreg_model(numerical_solution_kreg_model)
 
-    np.savetxt('../results/PCA-' + scaling + '-KReg-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
+    np.savetxt(results_path + 'PCA-' + scaling + '-KReg-PCA-source-terms-from-numerical-solution.csv', (PC_source_terms_from_numerical_solution), delimiter=',', fmt='%.16e')
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Reconstruct the thermo-chemistry from the evolved manifold parameters
@@ -498,28 +497,28 @@ if reconstruct_thermochemistry:
         numerical_solution_rbf_model_CS = (numerical_solution_rbf_model - center_PCA) / scale_PCA
         state_space_ROM_predicted_rbf = ann_model_state.predict(numerical_solution_rbf_model_CS)
         state_space_ROM_predicted_rbf = preprocess.invert_center_scale(state_space_ROM_predicted_rbf, state_space_centers, state_space_scales)
-        np.savetxt('../results/PCA-' + scaling + '-RBF-predicted-state-space.csv', (state_space_ROM_predicted_rbf), delimiter=',', fmt='%.16e')
+        np.savetxt(results_path + 'PCA-' + scaling + '-RBF-predicted-state-space.csv', (state_space_ROM_predicted_rbf), delimiter=',', fmt='%.16e')
 
     if run_GPR:
 
         numerical_solution_gpr_model_CS = (numerical_solution_gpr_model - center_PCA) / scale_PCA
         state_space_ROM_predicted_gpr = ann_model_state.predict(numerical_solution_gpr_model_CS)
         state_space_ROM_predicted_gpr = preprocess.invert_center_scale(state_space_ROM_predicted_gpr, state_space_centers, state_space_scales)
-        np.savetxt('../results/PCA-' + scaling + '-GPR-predicted-state-space.csv', (state_space_ROM_predicted_gpr), delimiter=',', fmt='%.16e')
+        np.savetxt(results_path + 'PCA-' + scaling + '-GPR-predicted-state-space.csv', (state_space_ROM_predicted_gpr), delimiter=',', fmt='%.16e')
 
     if run_ANN:
 
         numerical_solution_ann_model_CS = (numerical_solution_ann_model - center_PCA) / scale_PCA
         state_space_ROM_predicted_ann = ann_model_state.predict(numerical_solution_ann_model_CS)
         state_space_ROM_predicted_ann = preprocess.invert_center_scale(state_space_ROM_predicted_ann, state_space_centers, state_space_scales)
-        np.savetxt('../results/PCA-' + scaling + '-ANN-predicted-state-space.csv', (state_space_ROM_predicted_ann), delimiter=',', fmt='%.16e')
+        np.savetxt(results_path + 'PCA-' + scaling + '-ANN-predicted-state-space.csv', (state_space_ROM_predicted_ann), delimiter=',', fmt='%.16e')
 
     if run_KReg:
 
         numerical_solution_kreg_model_CS = (numerical_solution_kreg_model - center_PCA) / scale_PCA
         state_space_ROM_predicted_kreg = ann_model_state.predict(numerical_solution_kreg_model_CS)
         state_space_ROM_predicted_kreg = preprocess.invert_center_scale(state_space_ROM_predicted_kreg, state_space_centers, state_space_scales)
-        np.savetxt('../results/PCA-' + scaling + '-KReg-predicted-state-space.csv', (state_space_ROM_predicted_kreg), delimiter=',', fmt='%.16e')
+        np.savetxt(results_path + 'PCA-' + scaling + '-KReg-predicted-state-space.csv', (state_space_ROM_predicted_kreg), delimiter=',', fmt='%.16e')
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
