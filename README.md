@@ -26,6 +26,8 @@ This [Jupyter notebook](code/AE-transport-results.ipynb) can be used to upload a
 
 ## Results
 
+The [`results/`](results) directory stores figures and results in `.csv` files.
+
 ### PC-transport
 
 #### Test trajectory transported using PC-transport with the RBF closure model
