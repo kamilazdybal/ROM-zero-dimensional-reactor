@@ -49,3 +49,23 @@ This [Jupyter notebook](code/AE-transport-results.ipynb) can be used to upload a
 ![Screenshot](results/PCA-pareto-predicted-thermo-chemistry.png)
 
 ### AE-transport
+
+#### Test trajectory transported using AE-transport with the RBF closure model
+
+![Screenshot](results/best-AE-RBF-transported-trajectory.png)
+
+#### Test trajectory transported using AE-transport with the GPR closure model
+
+![Screenshot](results/best-AE-GPR-transported-trajectory.png)
+
+#### Test trajectory transported using AE-transport with the ANN closure model
+
+![Screenshot](results/best-AE-ANN-transported-trajectory.png)
+
+#### Test trajectory transported using AE-transport with the kernel regression closure model
+
+![Screenshot](results/best-AE-KReg-transported-trajectory.png)
+
+#### Predicted thermo-chemistry
+
+![Screenshot](results/best-AE-predicted-thermo-chemistry.png)
