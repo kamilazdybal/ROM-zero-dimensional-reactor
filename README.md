@@ -44,6 +44,12 @@ This [Jupyter notebook](code/AE-transport-results.ipynb) can be used to upload a
 
 ![Screenshot](results/PCA-pareto-KReg-transported-trajectory.png)
 
+#### *A posteriori* predictions of the first and second projected source terms
+
+![Screenshot](results/PCA-pareto-a-posteriori-SZ1-prediction.png)
+
+![Screenshot](results/PCA-pareto-a-posteriori-SZ2-prediction.png)
+
 #### Predicted thermo-chemistry
 
 ![Screenshot](results/PCA-pareto-predicted-thermo-chemistry.png)
@@ -65,6 +71,12 @@ This [Jupyter notebook](code/AE-transport-results.ipynb) can be used to upload a
 #### Test trajectory transported using AE-transport with the kernel regression closure model
 
 ![Screenshot](results/best-AE-KReg-transported-trajectory.png)
+
+#### *A posteriori* predictions of the first and second projected source terms
+
+![Screenshot](results/best-AE-a-posteriori-SZ1-prediction.png)
+
+![Screenshot](results/best-AE-a-posteriori-SZ2-prediction.png)
 
 #### Predicted thermo-chemistry
 
