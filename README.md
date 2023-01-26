@@ -6,7 +6,11 @@ Code and materials that accompany the Chapter from my dissertation: *Reduced-ord
 
 ### Transport of PCA-derived manifold parameters: [`PC-transport.py`](code/PC-transport.py)
 
+Running this script on your PC takes about 150 minutes. If you want much quicker results (of the order of 15 minutes), consider not running GPR (set `run_GPR = False`).
+
 ### Transport of regression-aware AE-derived manifold parameters: [`AE-transport.py`](code/AE-transport.py)
+
+Running this script on your PC takes about 9 hours. If you want much quicker results (of the order of 15 minutes), consider not running GPR (set `run_GPR = False`).
 
 #### Visualizing the results
 
