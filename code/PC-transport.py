@@ -14,6 +14,7 @@ import pandas as pd
 import george
 from scipy.integrate import odeint
 from scipy.interpolate import RBFInterpolator
+from scipy import __version__ as scipy_version
 
 import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping
@@ -26,11 +27,20 @@ from keras import optimizers
 from keras import metrics
 from keras import losses
 from keras import layers
+from keras import __version__ as keras_version
 
 from PCAfold import preprocess
 from PCAfold import reduction
 from PCAfold import analysis
 from PCAfold.styles import *
+from PCAfold import __version__ as PCAfold_version
+
+print('numpy version:\t\t' + np.__version__)
+print('scipy version:\t\t' + scipy_version)
+print('george version:\t\t' + george.__version__)
+print('tensorflow version:\t' + tf.__version__)
+print('keras version:\t\t' + keras_version)
+print('PCAfold version:\t' + PCAfold_version)
 
 total_script_tic = time.perf_counter()
 

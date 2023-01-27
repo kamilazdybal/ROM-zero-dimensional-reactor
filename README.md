@@ -10,13 +10,24 @@ The [`data/`](data) directory stores the training dataset corresponding to combu
 
 The [`code/`](code) directory stores Python code that can be used to reproduce results from my dissertation.
 
+Results in Chapter 8 have been generated with the following Python package versions:
+
+```
+numpy version:		1.21.6
+scipy version:		1.7.3
+george version:		0.4.0
+tensorflow version:	2.11.0
+keras version:		2.11.0
+PCAfold version:	1.6.0
+```
+
 ### Transport of PCA-derived manifold parameters: [`PC-transport.py`](code/PC-transport.py)
 
 Running this script on your PC takes about 150 minutes. If you want much quicker results (of the order of 15 minutes), consider not running GPR (set `run_GPR = False`).
 
 ### Transport of regression-aware AE-derived manifold parameters: [`AE-transport.py`](code/AE-transport.py)
 
-Running this script on your PC takes about 9 hours. If you want much quicker results (of the order of 15 minutes), consider not running GPR (set `run_GPR = False`).
+Running this script on your PC takes about 10 hours. If you want much quicker results (of the order of 15 minutes), consider not running GPR (set `run_GPR = False`).
 
 ### Visualizing the results
 
