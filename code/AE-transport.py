@@ -260,7 +260,7 @@ if run_ANN:
 
     print(f'\tANN training time: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    AE_source_terms_predicted_ann = ann_model.predict(AE_state_space_test_trajectory_CS)
+    AE_source_terms_predicted_ann = ann_model.predict(AE_state_space_test_trajectory_CS, verbose=0)
     AE_source_terms_predicted_ann = preprocess.invert_center_scale(AE_source_terms_predicted_ann, centers_AE_source_terms, scales_AE_source_terms)
 
     np.savetxt(results_path + 'best-AE-ANN-predicted-source-terms.csv', (AE_source_terms_predicted_ann), delimiter=',', fmt='%.16e')
@@ -386,7 +386,7 @@ if run_ANN:
 
         query_CS = (query - center_AE) / scale_AE
 
-        predicted = ann_model.predict(query_CS)
+        predicted = ann_model.predict(query_CS, verbose=0)
 
         predicted = preprocess.invert_center_scale(predicted, centers_AE_source_terms, scales_AE_source_terms)
 
@@ -506,34 +506,34 @@ if reconstruct_thermochemistry:
 
     print(f'\tANN training time: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    state_space_predicted = ann_model_state.predict(AE_state_space_support_trajectories_CS)
+    state_space_predicted = ann_model_state.predict(AE_state_space_support_trajectories_CS, verbose=0)
     state_space_predicted = preprocess.invert_center_scale(state_space_predicted, state_space_centers, state_space_scales)
 
     if run_RBF:
 
         numerical_solution_rbf_model_CS = (numerical_solution_rbf_model - center_AE) / scale_AE
-        state_space_ROM_predicted_rbf = ann_model_state.predict(numerical_solution_rbf_model_CS)
+        state_space_ROM_predicted_rbf = ann_model_state.predict(numerical_solution_rbf_model_CS, verbose=0)
         state_space_ROM_predicted_rbf = preprocess.invert_center_scale(state_space_ROM_predicted_rbf, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'best-AE-RBF-predicted-state-space.csv', (state_space_ROM_predicted_rbf), delimiter=',', fmt='%.16e')
 
     if run_GPR:
 
         numerical_solution_gpr_model_CS = (numerical_solution_gpr_model - center_AE) / scale_AE
-        state_space_ROM_predicted_gpr = ann_model_state.predict(numerical_solution_gpr_model_CS)
+        state_space_ROM_predicted_gpr = ann_model_state.predict(numerical_solution_gpr_model_CS, verbose=0)
         state_space_ROM_predicted_gpr = preprocess.invert_center_scale(state_space_ROM_predicted_gpr, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'best-AE-GPR-predicted-state-space.csv', (state_space_ROM_predicted_gpr), delimiter=',', fmt='%.16e')
 
     if run_ANN:
 
         numerical_solution_ann_model_CS = (numerical_solution_ann_model - center_AE) / scale_AE
-        state_space_ROM_predicted_ann = ann_model_state.predict(numerical_solution_ann_model_CS)
+        state_space_ROM_predicted_ann = ann_model_state.predict(numerical_solution_ann_model_CS, verbose=0)
         state_space_ROM_predicted_ann = preprocess.invert_center_scale(state_space_ROM_predicted_ann, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'best-AE-ANN-predicted-state-space.csv', (state_space_ROM_predicted_ann), delimiter=',', fmt='%.16e')
 
     if run_KReg:
 
         numerical_solution_kreg_model_CS = (numerical_solution_kreg_model - center_AE) / scale_AE
-        state_space_ROM_predicted_kreg = ann_model_state.predict(numerical_solution_kreg_model_CS)
+        state_space_ROM_predicted_kreg = ann_model_state.predict(numerical_solution_kreg_model_CS, verbose=0)
         state_space_ROM_predicted_kreg = preprocess.invert_center_scale(state_space_ROM_predicted_kreg, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'best-AE-KReg-predicted-state-space.csv', (state_space_ROM_predicted_kreg), delimiter=',', fmt='%.16e')
 

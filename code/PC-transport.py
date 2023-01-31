@@ -49,19 +49,19 @@ total_script_tic = time.perf_counter()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 data_tag = 'CO-H2-10-1-isobaric-adiabatic-closed-HR'
-data_path = '../data/'
-results_path = '../results/'
+data_path = 'data/'
+results_path = 'results/'
 species_to_remove_list = ['N2', 'AR', 'HE']
 sample_percentage = 100
 random_seed = 100
 n_components = 2
-scaling = 'pareto'
+scaling = 'vast_2'
 run_RBF = True
 run_GPR = True
 run_ANN = True
 run_KReg = True
 reconstruct_thermochemistry = True
-start_simulation = 120
+start_simulation = 170
 n_points = 2000
 max_simulation_time = 0.005
 
@@ -253,7 +253,7 @@ if run_ANN:
 
     print(f'\tANN training time: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    PCA_source_terms_predicted_ann = ann_model.predict(PCA_state_space_test_trajectory_CS)
+    PCA_source_terms_predicted_ann = ann_model.predict(PCA_state_space_test_trajectory_CS, verbose=0)
     PCA_source_terms_predicted_ann = preprocess.invert_center_scale(PCA_source_terms_predicted_ann, centers_PCA_source_terms, scales_PCA_source_terms)
 
     np.savetxt(results_path + 'PCA-' + scaling + '-ANN-predicted-source-terms.csv', (PCA_source_terms_predicted_ann), delimiter=',', fmt='%.16e')
@@ -379,7 +379,7 @@ if run_ANN:
 
         query_CS = (query - center_PCA) / scale_PCA
 
-        predicted = ann_model.predict(query_CS)
+        predicted = ann_model.predict(query_CS, verbose=0)
 
         predicted = preprocess.invert_center_scale(predicted, centers_PCA_source_terms, scales_PCA_source_terms)
 
@@ -499,34 +499,34 @@ if reconstruct_thermochemistry:
 
     print(f'\tANN training time: {(toc - tic)/60:0.1f} minutes.\n' + '-'*40)
 
-    state_space_predicted = ann_model_state.predict(PCA_state_space_support_trajectories_CS)
+    state_space_predicted = ann_model_state.predict(PCA_state_space_support_trajectories_CS, verbose=0)
     state_space_predicted = preprocess.invert_center_scale(state_space_predicted, state_space_centers, state_space_scales)
 
     if run_RBF:
 
         numerical_solution_rbf_model_CS = (numerical_solution_rbf_model - center_PCA) / scale_PCA
-        state_space_ROM_predicted_rbf = ann_model_state.predict(numerical_solution_rbf_model_CS)
+        state_space_ROM_predicted_rbf = ann_model_state.predict(numerical_solution_rbf_model_CS, verbose=0)
         state_space_ROM_predicted_rbf = preprocess.invert_center_scale(state_space_ROM_predicted_rbf, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'PCA-' + scaling + '-RBF-predicted-state-space.csv', (state_space_ROM_predicted_rbf), delimiter=',', fmt='%.16e')
 
     if run_GPR:
 
         numerical_solution_gpr_model_CS = (numerical_solution_gpr_model - center_PCA) / scale_PCA
-        state_space_ROM_predicted_gpr = ann_model_state.predict(numerical_solution_gpr_model_CS)
+        state_space_ROM_predicted_gpr = ann_model_state.predict(numerical_solution_gpr_model_CS, verbose=0)
         state_space_ROM_predicted_gpr = preprocess.invert_center_scale(state_space_ROM_predicted_gpr, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'PCA-' + scaling + '-GPR-predicted-state-space.csv', (state_space_ROM_predicted_gpr), delimiter=',', fmt='%.16e')
 
     if run_ANN:
 
         numerical_solution_ann_model_CS = (numerical_solution_ann_model - center_PCA) / scale_PCA
-        state_space_ROM_predicted_ann = ann_model_state.predict(numerical_solution_ann_model_CS)
+        state_space_ROM_predicted_ann = ann_model_state.predict(numerical_solution_ann_model_CS, verbose=0)
         state_space_ROM_predicted_ann = preprocess.invert_center_scale(state_space_ROM_predicted_ann, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'PCA-' + scaling + '-ANN-predicted-state-space.csv', (state_space_ROM_predicted_ann), delimiter=',', fmt='%.16e')
 
     if run_KReg:
 
         numerical_solution_kreg_model_CS = (numerical_solution_kreg_model - center_PCA) / scale_PCA
-        state_space_ROM_predicted_kreg = ann_model_state.predict(numerical_solution_kreg_model_CS)
+        state_space_ROM_predicted_kreg = ann_model_state.predict(numerical_solution_kreg_model_CS, verbose=0)
         state_space_ROM_predicted_kreg = preprocess.invert_center_scale(state_space_ROM_predicted_kreg, state_space_centers, state_space_scales)
         np.savetxt(results_path + 'PCA-' + scaling + '-KReg-predicted-state-space.csv', (state_space_ROM_predicted_kreg), delimiter=',', fmt='%.16e')
 
