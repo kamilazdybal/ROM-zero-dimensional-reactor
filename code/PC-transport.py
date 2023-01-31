@@ -49,19 +49,19 @@ total_script_tic = time.perf_counter()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 data_tag = 'CO-H2-10-1-isobaric-adiabatic-closed-HR'
-data_path = 'data/'
-results_path = 'results/'
+data_path = '../data/'
+results_path = '../results/'
 species_to_remove_list = ['N2', 'AR', 'HE']
 sample_percentage = 100
 random_seed = 100
 n_components = 2
-scaling = 'vast_2'
+scaling = 'pareto'
 run_RBF = True
 run_GPR = True
 run_ANN = True
 run_KReg = True
 reconstruct_thermochemistry = True
-start_simulation = 170
+start_simulation = 120
 n_points = 2000
 max_simulation_time = 0.005
 
